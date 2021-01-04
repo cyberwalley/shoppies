@@ -50,15 +50,17 @@ function openTab(){
               }
               */
             const localStorageItems = JSON.parse(localStorage.getItem('movies'));
-            if (localStorageItems.length < maxNominee){
-              const noticeBanner = document.querySelector('.banner-card-pass__wrapper');
-              //disable  warning banner when the keyword is valid
-              if (noticeBanner){
-                noticeBanner.classList.add('hide');
-                //disable unnominated movie whrn the max of 5 is reached
-                disableMoviesOnMaxNominee();
+            if (localStorageItems){
+              if (localStorageItems.length < maxNominee){
+                const noticeBanner = document.querySelector('.banner-card-pass__wrapper');
+                //disable  warning banner when the keyword is valid
+                if (noticeBanner){
+                  noticeBanner.classList.add('hide');
+                  //disable unnominated movie whrn the max of 5 is reached
+                  disableMoviesOnMaxNominee();
+                }
+  
               }
-
             }
         }
         // add selected-tabcontent class to the corresponding tabcontents 
