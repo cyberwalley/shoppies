@@ -116,7 +116,7 @@ function openTab(){
 
 
 /* Global Variables */
-const apiURL = 'http://www.omdbapi.com/';
+const apiURL = 'https://www.omdbapi.com/';
 const apiKey = 'dc6083ad';
 const contentType = 'movie'
 
