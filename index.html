@@ -30,7 +30,7 @@
                             <p class="mega-subtitle page-width ">
                                 Popular keywords: <a class="mega-subtitle_link" href="#">Harry potter</a>, <a class="mega-subtitle_link" href="#">Dracula</a>, <a class="mega-subtitle_link" href="#">Spiderman...</a>
                             </p>
-                            <form class="page-width search-form">
+                            <form class="page-width search-form" role=”search”>
                               <label class="search__label hide" aria-label="Movie title" for="SearchForm">Movie title</label>
                               <input id="searchInput" class="search-input" type="text" name="search" placeholder="Type movie title here..." required>
                               <button class="btn submit-button" type="submit">Search</button>
@@ -44,14 +44,14 @@
                 </div>
             </section>
             <section class="inner-container page-width section-movies">
-              <div class="tab-title__container">
+              <div role="tablist" class="tab-title__container">
                 <div class="tab-title__wrapper selected-tab">
-                  <button class="movies-tab tablink selected-tab" tabindex="0" type="button" role="tab">
+                  <button class="movies-tab tablink selected-tab" tabindex="0" type="button" role="tab" aria-selected="true" aria-controls="movies-pane">
                     Movies
                   </button>
                 </div>  
                 <div class="tab-title__wrapper">
-                  <button class="nomination-tab tablink text-center" tabindex="0" type="button" role="tab">
+                  <button class="nomination-tab tablink text-center" tabindex="-1" type="button" role="tab" aria-selected="false" aria-controls="nomination-pane">
                     Nomination
                   </button>
                 </div>

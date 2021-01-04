@@ -487,7 +487,7 @@ function updateModalUI(response){
           <img class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
         </div>
         <div class="modal-movie__title-wrapper">
-          <h2 class="modal-movie__title">${movie.Title}</h2>
+          <h2 tabindex="-1" class="modal-movie__title">${movie.Title}</h2>
           <ul class="modal-movie__detail-list">
             <li class="modal-movie__detail-list-item">
               <div class="modal-movie__detail-list-item-title">Genre</div>
@@ -521,6 +521,10 @@ function updateModalUI(response){
 
       const modalContainer = document.querySelector('.modal-outer');
       modalContainer.innerHTML = movieCard;
+
+      //accessibility on modal
+      const movieTitle = document.querySelector('.modal-movie__title');   
+      movieTitle.focus();
 
       //disable noominate button on modal if already nominated
       disableNominatedMovieOnModal(movie);
@@ -557,7 +561,7 @@ function updateModalForNomineeUI(response){
           <img class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
         </div>
         <div class="modal-movie__title-wrapper">
-          <h2 class="modal-movie__title">${movie.Title}</h2>
+          <h2 tabindex="-1" class="modal-movie__title">${movie.Title}</h2>
           <ul class="modal-movie__detail-list">
             <li class="modal-movie__detail-list-item">
               <div class="modal-movie__detail-list-item-title">Genre</div>
@@ -597,6 +601,10 @@ function updateModalForNomineeUI(response){
 
       //nominate movies on modal
       //nominateMovieOnModal();
+
+      //accessibility on modal
+      const movieTitle = document.querySelector('.modal-movie__title');   
+      movieTitle.focus();
 
       //remove movies on modal
       removeNomineeOnModal()
