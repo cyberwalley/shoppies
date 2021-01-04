@@ -14,7 +14,8 @@
    --color-lighter-green: #E3F1DF;
    --color-bg-shadow: #dfe3e8;
    --color-bg-hover-shadow: #6d7175;
-   --color-black: #212b35;
+   --color-black: #212326;
+   --color-gray: #6b7177;
    --color-yellow: #EEC200;
    --color-disabled-primary: #637381;
    --color-disabled-secondary: #d1d5d8;
@@ -33,8 +34,7 @@
   
   --avatar-size: 32px;
   --avatar-position: var(--card-padding) var(--card-padding);
-  --avatar-skeleton: radial-gradient(circle 16px at center, white 99%, transparent 0
-  );
+  --avatar-skeleton: radial-gradient(circle 16px at center, white 99%, transparent 0);
   
   --title-height: 32px;
   --title-width: 200px;
@@ -666,7 +666,7 @@ h1.site-logo-text{
 
 .tablink{
   background-color: white;
-  color: var(--color-disabled-primary);
+  color: var(--color-gray);
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
@@ -886,9 +886,10 @@ ul.banner-card-list{
 
 .empty-state_subtext{
   font-size: 1.2rem;
-  line-height: 1.2;
+  line-height: 1.3333333333;
   margin-top: 20px;
   margin-bottom: 31px;
+  color: var(--color-gray);
 }
 
 @media screen and (max-width: 590px) {
@@ -1430,7 +1431,7 @@ html{
 }
 
 .footer-help__text a {
-  color: var(--color-light-green);
+  color: #047b3f;
 
 }
 
