@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main-style.css">
+    <title>The Shoppies: Movie awards for entrepreneurs</title>
+    <link rel="shortcut icon" type="image/jpg" href="#"/>
+</head>
+<body>
+  <header class="section-header page-width">
+    <div class="section-header-wrapper">
+      <nav class="nav-wrapper grid">
+        <div class="nav-content grid__item one-whole">
+            <h1 class="site-logo-text"><a href="/">The Shoppies</a></h1>
+        </div>
+      </nav>
+    </div>
+  </header>
+    <div id="pageContainer">
+        <main id="main">
+            <section class="hero-container section-hero">
+                <div class="hero--inner-wrapper page-width">
+                    <div class="grid">
+                        <div class="grid__item medium-up--two-thirds">
+                            <h1 id="megaTitle" class="mega-title page-width">
+                                    Nominate your favorite movies.
+                            </h1>
+                            <p class="mega-subtitle page-width ">
+                                Popular keywords: <a class="mega-subtitle_link" href="#">Harry potter</a>, <a class="mega-subtitle_link" href="#">Dracula</a>, <a class="mega-subtitle_link" href="#">Spiderman...</a>
+                            </p>
+                            <form class="page-width search-form">
+                              <label class="search__label hide" aria-label="Movie title" for="SearchForm">Movie title</label>
+                              <input id="searchInput" class="search-input" type="text" name ="search" placeholder="Type movie title here..." required>
+                              <button class="btn submit-button" type="submit">Search</button>
+                            </form>
+                            <p class="mega-microtitle page-width ">
+                              Nominations are counted and audited by Deloitte.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+            <section class="inner-container page-width section-movies">
+              <div class="tab-title__container">
+                <div class="tab-title__wrapper selected-tab">
+                  <button class="movies-tab tablink selected-tab" tabindex="0" type="button" role="tab">
+                    Movies
+                  </button>
+                </div>  
+                <div class="tab-title__wrapper">
+                  <button class="nomination-tab tablink text-center" tabindex="0" type="button" role="tab">
+                    Nomination
+                  </button>
+                </div>
+              </div>
+              <div class="tab-content__wrapper">
+                <div id="movies" class="movies tabcontent selected-tabcontent">
+                  <h2 id="empty-state__heading" class="text-center empty-state__heading">Movies</h2>
+                  <div class="grid banner-card__container">
+                    <div id="banner-card" class="banner-card grid__item">
+                      <div class="banner-card-pass__wrapper hide">
+                        <div class="pass-icon">
+                          <svg viewBox="0 0 20 20" class="pass-icon__Svg" focusable="false" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M0 10a10 10 0 1 0 20 0 10 10 0 0 0-20 0zm15.2-1.8a1 1 0 0 0-1.4-1.4L9 11.6 6.7 9.3a1 1 0 0 0-1.4 1.4l3 3c.4.4 1 .4 1.4 0l5.5-5.5z"></path>
+                          </svg>
+                        </div>
+                        <div class="banner-card__message">
+                          <p class="banner-card__heading">
+                            You have nominated 5 movies.
+                          </p>
+                          <ul class="banner-card-list">
+                            <li class="banner-card-list__item">You are only allowed a maximum of 5 nominations.</li>
+                            <li class="banner-card-list__item">You can go to the nomination tab to review or replace your nominees</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="empty-state__container">
+                    <div class="grid empty-state__wrapper">
+                      <div class="grid__item medium-up--one-half small--one-half">
+                        <div class="empty-state_inner-wrapper">
+                          <p class="empty-state_megatext small--text-center">Search for your favorite movie by name.</p>
+                          <p class="empty-state_subtext small--text-center">The search result will appear here</p>
+                          <a href="#megaTitle"><button class="btn">Search</button></a>
+                        </div>
+                      </div>
+                      <div class="grid__item medium-up--one-half small--one-half">
+                        <div class="empty-state__image-wrapper">
+                          <img src="https://cdn.shopify.com/s/files/1/2506/6936/files/empty-state-new.svg?v=1608751807" role="presentation" alt="" class="empty-state__image">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <h3 class="text-center movie-card__heading"></h3>
+                  <div class="cards">
+                  </div>
+                </div>
+                <div id="nomination" class="nomination tabcontent">
+                  <h2 class="text-center empty-state__heading">Your nominations</h2>
+                  <div class="empty-state__container">
+                    <div class="grid empty-state__wrapper">
+                      <div class="grid__item medium-up--one-half small--one-half">
+                        <div class="empty-state_inner-wrapper">
+                          <p class="empty-state_megatext small--text-center">Your favorite movies deserve an award.</p>
+                          <p class="empty-state_subtext small--text-center">Nominate a movie and it will show up here.</p>
+                          <button class="btn empty-state-nominate-btn">Nominate</button>
+                        </div>
+                      </div>
+                      <div class="grid__item medium-up--one-half small--one-half">
+                        <div class="empty-state__image-wrapper">
+                          <img src="https://cdn.shopify.com/s/files/1/2506/6936/files/empty-state-new.svg?v=1608751807" role="presentation" alt="" class="empty-state__image">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cards">
+                  </div>
+                </div>
+              </div>
+              
+            <div class="text-center">
+                <button class="btn">More posts</button>
+            </div>
+            <div class="error-message_wrapper"></div>
+            <div class="modal-outer"></div> 
+          </section>
+
+        </main>
+
+        <footer class="footer-wrapper page-width">
+            <div class="footer-inner-wrapper page-width">
+              <div class="footer-help__content">
+                <div class="footer-help__icon">
+                  <span class="footer-icon"><svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M0 10C0 4.478 4.478 0 10 0c5.523 0 10 4.478 10 10 0 5.523-4.477 10-10 10-5.522 0-10-4.477-10-10zm11.125 2.002H8.989v-.141c.01-1.966.492-2.254 1.374-2.782.093-.056.19-.114.293-.178.73-.459 1.292-1.038 1.292-1.883 0-.948-.743-1.564-1.666-1.564-.851 0-1.657.398-1.712 1.533H6.304C6.364 4.693 8.18 3.5 10.294 3.5c2.306 0 3.894 1.447 3.894 3.488 0 1.382-.695 2.288-1.805 2.952l-.238.144c-.79.475-1.009.607-1.02 1.777V12zm.17 3.012a1.344 1.344 0 0 1-1.327 1.328 1.32 1.32 0 0 1-1.328-1.328 1.318 1.318 0 0 1 1.328-1.316c.712 0 1.322.592 1.328 1.316z"></path>
+                  </svg>
+                </span>
+                </div>
+                <div class="footer-help__text">Learn more about <a target="_blank" href="https://github.com/cyberwalley">Shoppies</a>
+                </div>
+                <span class="footer-icon"><svg viewBox="0 0 20 20" class="Polaris-Icon__Svg_375hu" focusable="false" aria-hidden="true"><path d="M14 13v1a1 1 0 0 1-1 1H6c-.575 0-1-.484-1-1V7a1 1 0 0 1 1-1h1c1.037 0 1.04 1.5 0 1.5-.178.005-.353 0-.5 0v6h6V13c0-1 1.5-1 1.5 0zm-3.75-7.25A.75.75 0 0 1 11 5h4v4a.75.75 0 0 1-1.5 0V7.56l-3.22 3.22a.75.75 0 1 1-1.06-1.06l3.22-3.22H11a.75.75 0 0 1-.75-.75z"></path></svg>
+                </span>
+              </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="script/main.js"></script>
+</body>
+</html>
