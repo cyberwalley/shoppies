@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="The Shoppies: an app to help manage the movie nominations for the maiden edition of the Shoppies.">
     <link rel="stylesheet" href="css/main-style.css">
     <title>The Shoppies: Movie awards for entrepreneurs</title>
     <link rel="shortcut icon" type="image/jpg" href="https://cdn.shopify.com/s/files/1/2506/6936/files/favicon.png?v=1609785610"/>
@@ -13,8 +14,8 @@
     <div class="section-header-wrapper">
       <nav class="nav-wrapper grid">
         <div class="nav-content grid__item one-whole">
-          <a href="/">
-            <img class="site-logo-image" src="https://cdn.shopify.com/s/files/1/2506/6936/files/shoppies-logo.svg?v=1609786867" alt="shppies logo">
+          <a class="site-logo-image-link" href="/">
+            <img class="site-logo-image" src="https://cdn.shopify.com/s/files/1/2506/6936/files/shoppies-logo.svg?v=1609786867" alt="shppies logo" width="250" height="72">
           </a>
         </div>
       </nav>
@@ -33,9 +34,8 @@
                                 Popular keywords: <a class="mega-subtitle_link" href="#">Harry potter</a>, <a class="mega-subtitle_link" href="#">Dracula</a>, <a class="mega-subtitle_link" href="#">Spiderman...</a>
                             </p>
                             <form class="page-width search-form">
-                              <label class="search__label hide" aria-label="Movie title" for="searchInput">Movie title
+                              <label class="search__label hide" aria-label="Movie title" for="searchInput">Movie title</label>
                                 <input id="searchInput" class="search-input" type="text" role=”search” name="search" placeholder="Type movie title here..." required>
-                              </label>
                               <button class="btn submit-button" type="submit">Search</button>
                             </form>
                             <p class="mega-microtitle page-width ">
@@ -49,18 +49,18 @@
             <section class="inner-container page-width section-movies">
               <div role="tablist" class="tab-title__container">
                 <div class="tab-title__wrapper selected-tab">
-                  <button class="movies-tab tablink selected-tab" tabindex="0" type="button" role="tab" aria-selected="true" aria-controls="movies-pane">
+                  <button class="movies-tab tablink selected-tab" tabindex="0" type="button" role="tab" aria-selected="true" id="tab-1" aria-controls="movies">
                     Movies
                   </button>
                 </div>  
                 <div class="tab-title__wrapper">
-                  <button class="nomination-tab tablink text-center" tabindex="-1" type="button" role="tab" aria-selected="false" aria-controls="nomination-pane">
+                  <button class="nomination-tab tablink text-center" tabindex="-1" type="button" role="tab" aria-selected="false" id="tab-2" aria-controls="nomination">
                     Nomination
                   </button>
                 </div>
               </div>
               <div class="tab-content__wrapper">
-                <div id="movies" class="movies tabcontent selected-tabcontent">
+                <div id="movies" class="movies tabcontent selected-tabcontent" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
                   <h2 id="empty-state__heading" class="text-center empty-state__heading">Movies</h2>
                   <div class="grid banner-card__container">
                     <div id="banner-card" class="banner-card grid__item">
@@ -93,7 +93,7 @@
                       </div>
                       <div class="grid__item medium-up--one-half small--one-half">
                         <div class="empty-state__image-wrapper">
-                          <img src="https://cdn.shopify.com/s/files/1/2506/6936/files/movies-empty-state.svg?v=1609784787" role="presentation" alt="" class="empty-state__image">
+                          <img src="https://cdn.shopify.com/s/files/1/2506/6936/files/movies-empty-state.svg?v=1609784787" width="608" height="498" role="presentation" alt="Search for your favorite movie by name" class="empty-state__image">
                         </div>
                       </div>
                     </div>
@@ -103,7 +103,7 @@
                   <div class="cards">
                   </div>
                 </div>
-                <div id="nomination" class="nomination tabcontent">
+                <div id="nomination" class="nomination tabcontent" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
                   <h2 class="text-center empty-state__heading">Your nominations</h2>
                   <div class="empty-state__container">
                     <div class="grid empty-state__wrapper">
@@ -116,7 +116,7 @@
                       </div>
                       <div class="grid__item medium-up--one-half small--one-half">
                         <div class="empty-state__image-wrapper">
-                          <img src="https://cdn.shopify.com/s/files/1/2506/6936/files/nomination-empty-state-2.svg?v=1609785285" role="presentation" alt="" class="empty-state__image">
+                          <img src="https://cdn.shopify.com/s/files/1/2506/6936/files/nomination-empty-state-2.svg?v=1609785285" width="608" height="498" role="presentation" alt="Your favorite movies deserve an award" class="empty-state__image">
                         </div>
                       </div>
                     </div>

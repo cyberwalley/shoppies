@@ -397,15 +397,10 @@ img{
     color: var(--color-yellow);
 }
 
-.site-logo-image{
-  width: 250px;
+.site-logo-image-link{
+  margin: 10px;
 }
-@media screen and (max-width: 749px) {
-    .site-logo-image {
-      width: 150px;
-  }
 
-}
 
 h1.site-logo-text{
   font-size: 2.1em;
