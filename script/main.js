@@ -141,7 +141,6 @@ const searchForm = document.querySelector('.search-form');
 const movieSection = document.querySelector('#movies .cards');
 const nominationSection = document.querySelector('#nomination .cards');
 
-
  searchForm.addEventListener('submit', handleSubmit);
 
 
@@ -213,6 +212,8 @@ const nominationSection = document.querySelector('#nomination .cards');
  
  async function getMovieDataByKeyword(searchKeyword) {
     try {
+      //loading
+      movieSection.innerHTML ="<h1>loading loading</h1>";
       let movieDataURL = `${apiURL}?s=${searchKeyword}&type=${contentType}&apikey=${apiKey}`;
       const response = await axios.get(movieDataURL);
       console.log(response, "yello");
@@ -267,15 +268,15 @@ let movieCard ="";
   movieItems[0].forEach(movieItem => {
     //if image is not available
     if (movieItem.Poster == 'N/A'){
-      movieItem.Poster = 'https://m.media-amazon.com/images/M/MV5BNmViZjY5OWQtYTMyZS00NTFjLWI3MjgtMjcyYjJiZjJiNDNkXkEyXkFqcGdeQXVyMzA1NjAzODI@._V1_SX300.jpg'
+      movieItem.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
     }
     const resultCounter = document.querySelector('.movie-card__heading');
-    const searchKeyword = document.querySelector('[name="search"]').value;
+    //const searchKeyword = document.querySelector('[name="search"]').value;
     resultCounter.innerHTML = `${movieItems[0].length} results found for <span class="search-keyword">"${searchTerm[0]}"</span>`;
 
     movieCard += `
                 <div class="card" data-description="${movieItem.Title}">
-                  <img class="movie-card__image" src="${movieItem.Poster}" alt="${movieItem.Title}">
+                  <img width="195" height="341" class="movie-card__image" src="${movieItem.Poster}" alt="${movieItem.Title}">
                   <div class="movie-card__content">
                     <h2 class="movie-card__title small--text-center"><a class="movie-card__title-link" data-movie-id="${movieItem.imdbID}" href="#">${movieItem.Title}</a></h2>
                     <ul class="subtext-wrapper">
@@ -428,17 +429,25 @@ function openModal(){
 //close modal
 function closeModal(){
   const closeModalIcon = document.querySelector('.modal-inner .close-icon');
-  const modalContainer = document.querySelector('.modal-outer');
+  const modalOuter = document.querySelector('.modal-outer');
   closeModalIcon.addEventListener('click', handlecloseModalByIcon );
   
-  function handlecloseModalByIcon(evt){
+  function handlecloseModalByIcon(){
     
-    modalContainer.classList.remove('open');
+    modalOuter.classList.remove('open');
   }
 
-  modalContainer.addEventListener('click', handlecloseModalByModalContainer );
+  modalOuter.addEventListener('click', handlecloseModalByModalContainer );
   function handlecloseModalByModalContainer(evt){
     evt.target.classList.remove('open');
+  }
+
+  window.addEventListener('keydown', handlecloseModalByModalContainer );
+  function handlecloseModalByModalContainer(evt){
+    if (evt.key === 'Escape'){
+      modalOuter.classList.remove('open');
+    }
+    
   }
 
 }
@@ -473,7 +482,7 @@ function updateModalUI(response){
   let movie = response.data;
     //if image is not available
     if (movie.Poster == 'N/A'){
-        movie.Poster = 'https://m.media-amazon.com/images/M/MV5BNmViZjY5OWQtYTMyZS00NTFjLWI3MjgtMjcyYjJiZjJiNDNkXkEyXkFqcGdeQXVyMzA1NjAzODI@._V1_SX300.jpg'
+        movie.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
     }
 
     let movieCard = `
@@ -484,7 +493,7 @@ function updateModalUI(response){
           </svg>
         </div>
         <div class="modal-movie__image-wrapper">
-          <img class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
+          <img width="300" height="444" class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
         </div>
         <div class="modal-movie__title-wrapper">
           <h2 tabindex="-1" class="modal-movie__title">${movie.Title}</h2>
@@ -547,7 +556,7 @@ function updateModalForNomineeUI(response){
   let movie = response.data;
     //if image is not available
     if (movie.Poster == 'N/A'){
-        movie.Poster = 'https://m.media-amazon.com/images/M/MV5BNmViZjY5OWQtYTMyZS00NTFjLWI3MjgtMjcyYjJiZjJiNDNkXkEyXkFqcGdeQXVyMzA1NjAzODI@._V1_SX300.jpg'
+        movie.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
     }
 
     let movieCard = `
@@ -558,7 +567,7 @@ function updateModalForNomineeUI(response){
           </svg>
         </div>
         <div class="modal-movie__image-wrapper">
-          <img class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
+          <img width="300" height="444" class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
         </div>
         <div class="modal-movie__title-wrapper">
           <h2 tabindex="-1" class="modal-movie__title">${movie.Title}</h2>
@@ -858,7 +867,7 @@ console.log(nominatedMovies, 'updateNominationsUI- na so we dey');
     //nominatedMovie[0].Title
     //if image is not available
     if (nominatedMovie[0].Poster == 'N/A'){
-      nominatedMovie[0].Poster = 'https://m.media-amazon.com/images/M/MV5BNmViZjY5OWQtYTMyZS00NTFjLWI3MjgtMjcyYjJiZjJiNDNkXkEyXkFqcGdeQXVyMzA1NjAzODI@._V1_SX300.jpg'
+      nominatedMovie[0].Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
     }
     //const pageHeading = document.querySelector('.movie-card__heading');
     //const searchKeyword = document.querySelector('[name="search"]').value;
@@ -866,7 +875,7 @@ console.log(nominatedMovies, 'updateNominationsUI- na so we dey');
 
     movieCard += `
                 <div class="card" data-description="${nominatedMovie[0].Title}">
-                  <img src="${nominatedMovie[0].Poster}" alt="${nominatedMovie[0].Title}">
+                  <img width="195" height="341" src="${nominatedMovie[0].Poster}" alt="${nominatedMovie[0].Title}">
                   <div class="movie-card__content">
                     <h2 class="movie-card__title small--text-center"><a class="movie-card__title-link" data-movie-id="${nominatedMovie[0].imdbID}" href="#">${nominatedMovie[0].Title}</a></h2>
                     <ul class="subtext-wrapper">

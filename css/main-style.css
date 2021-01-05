@@ -407,6 +407,7 @@ img{
 
 .site-logo-image-link{
   margin: 10px;
+  cursor: pointer;
 }
 
 
@@ -731,12 +732,7 @@ h1.site-logo-text{
   padding: 20px;
 }
 
-img.movie-card__image{
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  height: 250px;
 
-}
 
 .movie-card__link{
   margin-bottom: 0.9375em;
@@ -1234,9 +1230,12 @@ li.side-bar-item{
 
 .card img {
   width: 100%;
-  height: 265px;
+  height: 300px;
+
   
 }
+
+
 
 .movie-card__content{
   min-height: 87px;
@@ -1291,10 +1290,9 @@ li.side-bar-item{
   justify-content: center;
   align-items: center;
   overflow: auto;
-  /* Hide this modal until we need it */
   opacity: 0;
   pointer-events: none;
-  transition: all 0.35s ease-in;
+  transition: opacity 0.2s;
 }
 
 .modal-outer img {
@@ -1311,7 +1309,7 @@ li.side-bar-item{
   padding: 2rem;
   border: 1px solid #888;
   margin: auto;
-  max-width: 90%;
+  max-width: 700px;
   border-radius: 5px;
   background-color: white;
   transition: transform 2s;
@@ -1357,6 +1355,14 @@ li.side-bar-item{
 
 }
 
+@media screen and (max-width: 590px) {
+  .modal-movie__plot-heading, .modal-movie__plot-content{
+    padding-left: 10px;
+
+  }
+
+}
+
 .modal-inner .close-icon{
   position: absolute;
   background-color: white;
@@ -1391,12 +1397,7 @@ li.side-bar-item{
 
 }
 
-@media screen and (min-width: 1200px) {
-  .modal-inner {
-    min-width: 90%;
-  }
 
-}
 
 .error-message{
   font-size: 1.5em;
