@@ -117,10 +117,20 @@ function openTab(){
 }
 
 
-/* Global Variables */
-const apiURL = 'https://www.omdbapi.com/';
+
+/* const apiURL = 'https://www.omdbapi.com/';
 const apiKey = 'dc6083ad';
-const contentType = 'movie'
+const contentType = 'movie' */
+
+/* Global Variables */
+
+
+const apiSettings ={
+  apiUrl: 'https://www.omdbapi.com/',
+  apiKey : 'dc6083ad',
+  contentType : 'movie'
+
+}
 
 //array to hold search term
 let searchTerm =[];
@@ -267,8 +277,10 @@ const nominationSection = document.querySelector('#nomination .cards');
       //movieSection.style.gridTemplateColumns = 'repeat(1, 1fr)';
       movieSection.innerHTML = skeletonCards;
       
-
-      let movieDataURL = `${apiURL}?s=${searchKeyword}&type=${contentType}&apikey=${apiKey}`;
+      //apiSettings
+      let movieDataURL = `${apiSettings.apiUrl}?s=${searchKeyword}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
+      //let movieDataURL = `${apiURL}?s=${searchKeyword}&type=${contentType}&apikey=${apiKey}`;
+      console.log(movieDataURL, ' looking for yaaaaaa')
       const response = await axios.get(movieDataURL);
       console.log(response, "yello");
      
@@ -332,9 +344,10 @@ let movieCard ="";
     if (movieItem.Poster == 'N/A'){
       movieItem.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
     }
-    const resultCounter = document.querySelector('.movie-card__heading');
-    //const searchKeyword = document.querySelector('[name="search"]').value;
-    resultCounter.innerHTML = `${movieItems[0].length} results found for <span class="search-keyword">"${searchTerm[0]}"</span>`;
+   /*  const resultCounter = document.querySelector('.movie-card__heading-wrapper');
+    if (!resultCounter.classList.contains('hide')){
+      resultCounter.classList.add('hide');
+    } */
 
     movieCard += `
                 <div class="card" data-description="${movieItem.Title}">
@@ -355,7 +368,18 @@ let movieCard ="";
   
   movieSection.innerHTML = movieCard;
 
-  //diable nominated movie button on search results
+  
+    //const searchKeyword = document.querySelector('[name="search"]').value;
+    //display result count
+  /* const resultCounter = document.querySelector('.movie-card__heading');
+  resultCounter.innerHTML = `${movieItems[0].length} results found for <span class="search-keyword">"${searchTerm[0]}"</span>`; */
+//<h3 class="text-center movie-card__heading"></h3>
+const resultCounter = document.querySelector('.movie-card__heading-wrapper');
+//resultCounter.classList.remove('hide');
+resultCounter.innerHTML = `<h3 class="text-center movie-card__heading">${movieItems[0].length} results found for <span class="search-keyword">"${searchTerm[0]}"</span></h3>`;
+  
+
+//diable nominated movie button on search results
   disableNominatedMovieOnSearchResults();
   
 
@@ -519,7 +543,7 @@ function closeModal(){
 
 async function getMovieDataById(movieId){
   try {
-    let movieDataURL = `${apiURL}?i=${movieId}&type=${contentType}&apikey=${apiKey}`;
+    let movieDataURL = `${apiSettings.apiUrl}?i=${movieId}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
     const response = await axios.get(movieDataURL);
     console.log(response, "getMovieDataById");
     updateModalUI(response);  
@@ -530,7 +554,7 @@ async function getMovieDataById(movieId){
 
 async function getMovieDataByIdForNomineeModal(movieId){
   try {
-    let movieDataURL = `${apiURL}?i=${movieId}&type=${contentType}&apikey=${apiKey}`;
+    let movieDataURL = `${apiSettings.apiUrl}?i=${movieId}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
     const response = await axios.get(movieDataURL);
     console.log(response, "getMovieDataById");
     updateModalForNomineeUI(response);  
@@ -1099,34 +1123,36 @@ const unnominatedBtns = movieItem.querySelectorAll('.nominate[data-movie-id]');
 
 //.getAttribute('data-movie-id');
     const localStorageItems = JSON.parse(localStorage.getItem('movies'));
-    if (localStorageItems.length === maxNominee && movieItems.length){
-      for (movieItem of movieItems[0]){
-        for (nominatedMovie of nominatedMovies){
-          if (movieItem !== nominatedMovie[0] ){
-                const unnominatedMovieId = movieItem.imdbID
-              const unnominatedMovieBtns = document.querySelectorAll('.nominate[data-movie-id]');
-              unnominatedMovieBtns.forEach(unnominatedMovieBtn => {
-                unnominatedMovieBtn.setAttribute('data-movie-unnominated-id',`${movieItem.imdbID}`)
-                if(unnominatedMovieId === unnominatedMovieBtn.getAttribute('data-movie-unnominated-id') ){
-                  if(!unnominatedMovieBtn.hasAttribute('nominated')){
-                    unnominatedMovieBtn.setAttribute('disabled','disabled');
-                    unnominatedMovieBtn.textContent = 'unavailable';
-  
+    if (localStorageItems){
+      if (localStorageItems.length === maxNominee && movieItems.length){
+        for (movieItem of movieItems[0]){
+          for (nominatedMovie of nominatedMovies){
+            if (movieItem !== nominatedMovie[0] ){
+                  const unnominatedMovieId = movieItem.imdbID
+                const unnominatedMovieBtns = document.querySelectorAll('.nominate[data-movie-id]');
+                unnominatedMovieBtns.forEach(unnominatedMovieBtn => {
+                  unnominatedMovieBtn.setAttribute('data-movie-unnominated-id',`${movieItem.imdbID}`)
+                  if(unnominatedMovieId === unnominatedMovieBtn.getAttribute('data-movie-unnominated-id') ){
+                    if(!unnominatedMovieBtn.hasAttribute('nominated')){
+                      unnominatedMovieBtn.setAttribute('disabled','disabled');
+                      unnominatedMovieBtn.textContent = 'unavailable';
+    
+                    }
+                    
+                  
                   }
                   
+                  
+  
+                });
                 
-                }
                 
-                
-
-              });
               
-              
-            
+            }
+      
           }
-    
+      
         }
-    
       }
     }
 
