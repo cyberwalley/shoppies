@@ -183,9 +183,9 @@ const nominationSection = document.querySelector('#nomination .cards');
                   </a>
                 </div>
                 <div class="movie-card__content-wrapper">
-                  <h2 class="movie-card__title">
+                  <h4 class="movie-card__title">
                       <a href="#">${data.Search.Title}</a>
-                  </h2>
+                  </h4>
                   <ul class="subtext-wrapper">
                       <li class="subtext-item">${data.Search.Genre}</li>
                       <li class="subtext-item">${data.Search.Year}</li>
@@ -212,8 +212,62 @@ const nominationSection = document.querySelector('#nomination .cards');
  
  async function getMovieDataByKeyword(searchKeyword) {
     try {
-      //loading
-      movieSection.innerHTML ="<h1>loading loading</h1>";
+       //Skeleton loading
+        const skeletonCards =`
+        <div class="card">
+            <div class="movie-card__image-wrapper loading">
+            </div>
+            <div class="movie-card__content">
+              <h4 class="movie-card__title small--text-center loading"></h4>
+              <ul class="subtext-wrapper">
+                  <li class="subtext-item small--text-center loading"></li>
+              </ul>
+            </div>
+            <div class="loading-skeleton__button loading"></div>
+          </div>
+          <div class="card">
+            <div class="movie-card__image-wrapper loading">
+            </div>
+            <div class="movie-card__content">
+              <h4 class="movie-card__title small--text-center loading"></h4>
+              <ul class="subtext-wrapper">
+                  <li class="subtext-item small--text-center loading"></li>
+              </ul>
+            </div>
+            <div class="loading-skeleton__button loading"></div>
+          </div>
+          <div class="card">
+            <div class="movie-card__image-wrapper loading">
+            </div>
+            <div class="movie-card__content">
+              <h4 class="movie-card__title small--text-center loading"></h4>
+              <ul class="subtext-wrapper">
+                  <li class="subtext-item small--text-center loading"></li>
+              </ul>
+            </div>
+            <div class="loading-skeleton__button loading"></div>
+          </div>
+          <div class="card">
+            <div class="movie-card__image-wrapper loading">
+            </div>
+            <div class="movie-card__content">
+              <h4 class="movie-card__title small--text-center loading"></h4>
+              <ul class="subtext-wrapper">
+                  <li class="subtext-item small--text-center loading"></li>
+              </ul>
+            </div>
+            <div class="loading-skeleton__button loading"></div>
+          </div>
+     `; 
+
+      //Spinner loading
+     /* const loadingSpinner =`<span class="spinner  card-spinner">
+     <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
+ </span>`; */
+      //movieSection.style.gridTemplateColumns = 'repeat(1, 1fr)';
+      movieSection.innerHTML = skeletonCards;
+      
+
       let movieDataURL = `${apiURL}?s=${searchKeyword}&type=${contentType}&apikey=${apiKey}`;
       const response = await axios.get(movieDataURL);
       console.log(response, "yello");
@@ -230,9 +284,17 @@ const nominationSection = document.querySelector('#nomination .cards');
       movieItems.unshift(validData);
       console.log(movieItems[0])
       console.log(movieItems[0].length)
-      
+
+      //timer delay for skeleton loading
+      setTimeout(() => {
+        //movieSection.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        //movieSection.style.gridTemplateColumns = 'repeat(4, 1fr)';
+
+        //update UI with results
         updateResultUI(movieItems); 
-      
+        
+        }, 1500);
+  
       
       
       //reset oor clear search form
@@ -278,7 +340,7 @@ let movieCard ="";
                 <div class="card" data-description="${movieItem.Title}">
                   <img width="195" height="341" class="movie-card__image" src="${movieItem.Poster}" alt="${movieItem.Title}">
                   <div class="movie-card__content">
-                    <h2 class="movie-card__title small--text-center"><a class="movie-card__title-link" data-movie-id="${movieItem.imdbID}" href="#">${movieItem.Title}</a></h2>
+                    <h4 class="movie-card__title small--text-center"><a class="movie-card__title-link" data-movie-id="${movieItem.imdbID}" href="#">${movieItem.Title}</a></h4>
                     <ul class="subtext-wrapper">
                         <li class="subtext-item small--text-center">${movieItem.Year}</li>
                     </ul>
@@ -439,11 +501,12 @@ function closeModal(){
 
   modalOuter.addEventListener('click', handlecloseModalByModalContainer );
   function handlecloseModalByModalContainer(evt){
+    console.log( evt.target, "yehoooo")
     evt.target.classList.remove('open');
   }
 
-  window.addEventListener('keydown', handlecloseModalByModalContainer );
-  function handlecloseModalByModalContainer(evt){
+  window.addEventListener('keydown', handlecloseModalByEsc );
+  function handlecloseModalByEsc(evt){
     if (evt.key === 'Escape'){
       modalOuter.classList.remove('open');
     }
@@ -877,7 +940,7 @@ console.log(nominatedMovies, 'updateNominationsUI- na so we dey');
                 <div class="card" data-description="${nominatedMovie[0].Title}">
                   <img width="195" height="341" src="${nominatedMovie[0].Poster}" alt="${nominatedMovie[0].Title}">
                   <div class="movie-card__content">
-                    <h2 class="movie-card__title small--text-center"><a class="movie-card__title-link" data-movie-id="${nominatedMovie[0].imdbID}" href="#">${nominatedMovie[0].Title}</a></h2>
+                    <h4 class="movie-card__title small--text-center"><a class="movie-card__title-link" data-movie-id="${nominatedMovie[0].imdbID}" href="#">${nominatedMovie[0].Title}</a></h4>
                     <ul class="subtext-wrapper">
                         <li class="subtext-item small--text-center">${nominatedMovie[0].Year}</li>
                     </ul>
@@ -1121,6 +1184,29 @@ function disableNominatedMovieOnModal(movie){
  }
 */
 
+// laoding skeleton state
+/*
+function loadingSkeletonCards(movieSection){
+
+  let seletonCards =`<div class="cards">
+  <div class="card">
+      <div class="movie-card__image-wrapper loading">
+      </div>
+      <div class="movie-card__content">
+        <h4 class="movie-card__title small--text-center loading"></h4>
+        <ul class="subtext-wrapper">
+            <li class="subtext-item small--text-center loading"></li>
+        </ul>
+      </div>
+      <div class="loading-skeleton__button loading"></div>
+    </div>
+</div>`;
+
+movieSection.innerHTML = seletonCards;
+
+}
+*/
+
 function displayError(error){
   const erroeMessageContainer = document.querySelector('.error-message_wrapper');
   const errorMessage = `<p class="error-message"><strong>${error}</strong> : Sorry, something went wrong</p>`;
@@ -1178,9 +1264,9 @@ const updateUI = async (url='') => {
                     </a>
                   </div>
                   <div class="movie-card__content-wrapper">
-                    <h2 class="movie-card__title">
+                    <h4 class="movie-card__title">
                         <a href="#">${data.Title}</a>
-                    </h2>
+                    </h4>
                     <ul class="subtext-wrapper">
                         <li class="subtext-item">${data.Genre}</li>
                         <li class="subtext-item">${data.Year}</li>
