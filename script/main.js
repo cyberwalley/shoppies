@@ -142,7 +142,7 @@ let nominatedMovies = [];
 
 const maxNominee = 5;
 
-
+const unavailableImage ='https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912';
 
 //const searchKeyword = document.querySelector('[name="searchInput"]').value;
 const searchButton = document.querySelector('.submit-button');
@@ -299,8 +299,6 @@ const nominationSection = document.querySelector('#nomination .cards');
 
       //timer delay for skeleton loading
       setTimeout(() => {
-        //movieSection.style.gridTemplateColumns = 'repeat(4, 1fr)';
-        //movieSection.style.gridTemplateColumns = 'repeat(4, 1fr)';
 
         //update UI with results
         updateResultUI(movieItems); 
@@ -342,7 +340,7 @@ let movieCard ="";
   movieItems[0].forEach(movieItem => {
     //if image is not available
     if (movieItem.Poster == 'N/A'){
-      movieItem.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
+      movieItem.Poster = unavailableImage;
     }
    /*  const resultCounter = document.querySelector('.movie-card__heading-wrapper');
     if (!resultCounter.classList.contains('hide')){
@@ -569,7 +567,7 @@ function updateModalUI(response){
   let movie = response.data;
     //if image is not available
     if (movie.Poster == 'N/A'){
-        movie.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
+        movie.Poster = unavailableImage;
     }
 
     let movieCard = `
@@ -643,7 +641,7 @@ function updateModalForNomineeUI(response){
   let movie = response.data;
     //if image is not available
     if (movie.Poster == 'N/A'){
-        movie.Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
+        movie.Poster = unavailableImage;
     }
 
     let movieCard = `
@@ -721,18 +719,33 @@ function  nominateMovie(){
   nominateButtons.forEach(nominateButton => nominateButton.addEventListener('click', addMovieItemsToLocalStorage))
 
   function addMovieItemsToLocalStorage(evt){
-    if (evt.target.hasAttribute('data-movie-id')){
+    const button = evt.target;
+    if (button.hasAttribute('data-movie-id')){
       
+      console.log(button, 'yollooooooooo')
       //setAttribute('disabled', 'disabled')
       //evt.target.disabled = 'true'
 
-      //disable button
-      evt.target.setAttribute('disabled', 'disabled');
-      //add nminated data attribute
-      evt.target.setAttribute('nominated', '');
-      //change button label to nominated
-      evt.target.textContent = 'nominated ✓';
-      const movieId = evt.target.getAttribute('data-movie-id');
+      const spinnerIcon =`<span class="spinner  card-spinner">
+      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
+  </span>`;
+      //add tloading spinner
+      button.innerHTML=`${spinnerIcon}`;
+      //button.insertAdjacentHTML = `${spinnerIcon}`;
+
+      
+      //timer for loading spinner
+      setTimeout(() => {
+          //disable button
+        button.setAttribute('disabled', 'disabled');
+        //add nminated data attribute
+        button.setAttribute('nominated', '');
+          //change button label to nominated
+        evt.target.textContent = 'nominated ✓';
+        
+        }, 500);
+      
+      const movieId = button.getAttribute('data-movie-id');
       
       //let bigCities = cities.filter(city => city.population > 3000000);
       //console.log(movieItems, "movieItems before filter")
@@ -774,9 +787,13 @@ function  nominateMovie(){
         });
 
         */
-        
+        //timer to allow loading spinner before disabling the remaining movies maximum number of nominee is reached
+       setTimeout(() => {
         //disable unnominated movie when the maximum number of nominee is reached
         disableMoviesOnMaxNominee();
+    
+      }, 500);
+        
         
       }
       
@@ -801,9 +818,21 @@ function nominateMovieOnModal(){
   nominateBtnOnModal.addEventListener('click', handleNominateBtnOnModal);
 
   function handleNominateBtnOnModal(evt){
-    evt.target.setAttribute('disabled', 'disabled');
-    evt.target.textContent = "nominated ✓";
-    const buttonMovieId = evt.target.getAttribute('data-movie-id');
+    const button = evt.target;
+
+    const spinnerIcon =`<span class="spinner  card-spinner">
+      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
+  </span>`;
+      //add tloading spinner
+      button.innerHTML=`${spinnerIcon}`;
+    setTimeout(() => {
+      button.setAttribute('disabled', 'disabled');
+      button.textContent = "nominated ✓";
+   
+    
+    }, 500);
+    
+    const buttonMovieId = button.getAttribute('data-movie-id');
     for (movieItem of movieItems[0]){
       if (movieItem.imdbID === buttonMovieId){
         const nominateMovie = document.querySelector(`#movies .nominate[data-movie-id="${movieItem.imdbID}"]`);
@@ -825,9 +854,20 @@ function removeNomineeOnModal(){
   nominateBtnOnModal.addEventListener('click', handleNominateBtnOnModal);
 
   function handleNominateBtnOnModal(evt){
-    evt.target.setAttribute('disabled', 'disabled');
-    evt.target.textContent = "removed";
-    const buttonMovieId = evt.target.getAttribute('data-movie-id');
+    const button = evt.target;
+    const spinnerIcon =`<span class="spinner  card-spinner">
+    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
+</span>`;
+    //add loading spinner
+    button.innerHTML=`${spinnerIcon}`;
+
+    setTimeout(() => {
+      button.setAttribute('disabled', 'disabled');
+      button.textContent = "removed";
+      
+        
+        }, 500);
+    const buttonMovieId = button.getAttribute('data-movie-id');
     for (nominatedMovie of nominatedMovies){
       if (nominatedMovie[0].imdbID === buttonMovieId){
         const removeMovie = document.querySelector(`#nomination [nominee][data-movie-id="${nominatedMovie[0].imdbID}"]`);
@@ -954,7 +994,7 @@ console.log(nominatedMovies, 'updateNominationsUI- na so we dey');
     //nominatedMovie[0].Title
     //if image is not available
     if (nominatedMovie[0].Poster == 'N/A'){
-      nominatedMovie[0].Poster = 'https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912'
+      nominatedMovie[0].Poster = unavailableImage;
     }
     //const pageHeading = document.querySelector('.movie-card__heading');
     //const searchKeyword = document.querySelector('[name="search"]').value;
@@ -997,42 +1037,57 @@ console.log(nominatedMovies, 'updateNominationsUI- na so we dey');
 
 function deleteNominatedMovie(){
   nominationSection.addEventListener('click', function(evt){
-    if (evt.target.matches('button.remove-btn')){
-      console.log('deleting nominated movie');
-     
-     const movieId = evt.target.getAttribute('data-movie-id');
-      
-     //filter deleted movie by ID and then pass it to the nominatedMovies array  tp overwrite it
-     nominatedMovies = nominatedMovies.filter(nominatedMovie => nominatedMovie[0].imdbID !== movieId);
-     //console.log(findMovieById,"findMovieById")
-     //updateNominationsUI(findMovieById);
-     localStorage.setItem('movies', JSON.stringify(nominatedMovies))
-     updateNominationsUI(nominatedMovies);
-
-     //update results UI in oreer to return movie back to the nomination tab and enable the nominate button
-     //updateResultUI(movieItems);
-
-      //update results UI after removing movie from the nomination list
-      if (movieItems.length){
-        updateResultUI(movieItems); 
-      }
-
-
-     //localStorage.setItem('movies', JSON.stringify(nominatedMovies))
-     //nominatedMovies.pop(findMovieById);
-     /*
-     const indexOfItem = nominatedMovies.findIndex(findMovieById);
-     console.log(indexOfItem)
-     nominatedMovies.splice(indexOfItem, 1);
-     console.log(nominatedMovies);
-      if (localStorage.getItem("movies") !== null) {
-        updateNominationsUI(nominatedMovies);
-        
-      }
-      */
-
-     
+    const button = evt.target;
+    if (button.matches('button.remove-btn')){
+        const spinnerIcon =`<span class="spinner  card-spinner">
+        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
+    </span>`;
+      //add loading spinner
+      button.innerHTML=`${spinnerIcon}`;
     }
+    
+      //timer to allow loading spinners to kick in before removing nominee
+    setTimeout(() => {
+      if (button.matches('button.remove-btn')){
+        console.log('deleting nominated movie');
+       
+       const movieId = button.getAttribute('data-movie-id');
+        
+       //filter deleted movie by ID and then pass it to the nominatedMovies array  tp overwrite it
+       nominatedMovies = nominatedMovies.filter(nominatedMovie => nominatedMovie[0].imdbID !== movieId);
+       //console.log(findMovieById,"findMovieById")
+       //updateNominationsUI(findMovieById);
+       localStorage.setItem('movies', JSON.stringify(nominatedMovies))
+       updateNominationsUI(nominatedMovies);
+  
+       //update results UI in oreer to return movie back to the nomination tab and enable the nominate button
+       //updateResultUI(movieItems);
+  
+        //update results UI after removing movie from the nomination list
+        if (movieItems.length){
+          updateResultUI(movieItems); 
+        }
+  
+  
+       //localStorage.setItem('movies', JSON.stringify(nominatedMovies))
+       //nominatedMovies.pop(findMovieById);
+       /*
+       const indexOfItem = nominatedMovies.findIndex(findMovieById);
+       console.log(indexOfItem)
+       nominatedMovies.splice(indexOfItem, 1);
+       console.log(nominatedMovies);
+        if (localStorage.getItem("movies") !== null) {
+          updateNominationsUI(nominatedMovies);
+          
+        }
+        */
+  
+       
+      }
+   
+    
+    }, 500);
+    
   })
 }
 

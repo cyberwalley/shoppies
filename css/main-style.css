@@ -1501,7 +1501,7 @@ html{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 18px;
 }
 
 .spinner svg{
@@ -1509,8 +1509,8 @@ html{
   fill: #47c1bf;
 }
 .card-spinner svg{
-  height: 4.4rem;
-  width: 4.4rem;
+  height: 1.4rem;
+  width: 1.4rem;
 }
 
 @keyframes spinner-loading{
