@@ -71,6 +71,10 @@ body{
     font-family: var(--font-family);
 }
 
+:focus{
+  outline: 2px solid deepskyblue;
+}
+
 html,
 body,
 figure,
@@ -89,12 +93,9 @@ button {
     cursor: pointer;
 }
 
-input:focus{
-  outline: 2px solid var(--color-yellow);
-}
 
 button:focus{
-  outline: 2px solid var(--color-yellow);
+  outline: 2px solid deepskyblue;
 }
 
 *,
@@ -113,10 +114,6 @@ ol {
 
 a {
     text-decoration: none;
-}
-
-a:focus {
-  outline: thin solid var(--color-yellow);
 }
 
 img{
@@ -320,9 +317,7 @@ img{
   .btn:hover{
     background-color: var(--color-light-green--hover);
   }
-  .btn:focus{
-    outline: thin solid var(--color-yellow);
-  }
+  
 
   @media screen and (max-width: 749px) {
     .btn{
@@ -756,10 +751,6 @@ h1.site-logo-text{
   fill: #637381;
 }
 
-.close-icon svg:focus{
-  outline: 2px solid var(--color-yellow);
-
-}
 .banner-card-pass__wrapper{
   display: flex;
   padding: 40px 20px;

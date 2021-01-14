@@ -16,13 +16,19 @@ function openTab(){
   tabLinks.forEach(tabButton => tabButton.addEventListener('click', handleTabClick));
   //callback function 
   function handleTabClick(evt){
-    tabLinks.forEach(tabButton => tabButton.classList.remove('selected-tab'));
+    tabLinks.forEach(tabButton => {
+      //accessibility
+      tabButton.setAttribute('aria-selected', 'false');
+      tabButton.classList.remove('selected-tab')
+    });
     evt.target.classList.add('selected-tab');
     tabWrappers.forEach(tabButton => tabButton.classList.remove('selected-tab'));
     const closestTabWrapper = evt.target.closest('.tab-title__wrapper');
     closestTabWrapper.classList.add('selected-tab');
     // add selected-tabcontent class to the corresponding tabcontents 
     if (evt.target.classList.contains('movies-tab')){
+      //accessibility
+      evt.target.setAttribute('aria-selected', 'true');
       allTabContents.forEach(tabContent => tabContent.classList.remove('selected-tabcontent'));
       tabMoviesContent.classList.add('selected-tabcontent')
       const localStorageItems = JSON.parse(localStorage.getItem('movies'));
@@ -41,6 +47,8 @@ function openTab(){
     }
     // add selected-tabcontent class to the corresponding tabcontents 
     if (evt.target.classList.contains('nomination-tab')){
+        //accessibility
+        evt.target.setAttribute('aria-selected', 'true');
         allTabContents.forEach(tabContent => tabContent.classList.remove('selected-tabcontent'));
         tabNominationContent.classList.add('selected-tabcontent')
         //displayNominatedMovie();
@@ -291,7 +299,6 @@ function closeModal(){
 
   modalOuter.addEventListener('click', handlecloseModalByModalContainer );
   function handlecloseModalByModalContainer(evt){
-    console.log( evt.target, "yehoooo")
     evt.target.classList.remove('open');
   }
 
@@ -334,7 +341,7 @@ function updateModalUI(response){
   }
 
   let movieCard = `
-    <div class="modal-inner">
+    <div tabindex="-1" class="modal-inner">
       <div class="close-icon">
         <svg viewBox="0 0 20 20" class="pass-icon__Svg" tabindex="0" focusable="false" aria-hidden="true">
           <path d="M11.414 10l4.293-4.293a.999.999 0 1 0-1.414-1.414L10 8.586 5.707 4.293a.999.999 0 1 0-1.414 1.414L8.586 10l-4.293 4.293a.999.999 0 1 0 1.414 1.414L10 11.414l4.293 4.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z"></path>
@@ -344,7 +351,7 @@ function updateModalUI(response){
         <img width="300" height="444" class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
       </div>
       <div class="modal-movie__title-wrapper">
-        <h2 tabindex="-1" class="modal-movie__title">${movie.Title}</h2>
+        <h2 class="modal-movie__title">${movie.Title}</h2>
         <ul class="modal-movie__detail-list">
           <li class="modal-movie__detail-list-item">
             <div class="modal-movie__detail-list-item-title">Genre</div>
@@ -380,8 +387,8 @@ function updateModalUI(response){
     modalContainer.innerHTML = movieCard;
 
     //accessibility on modal
-    const movieTitle = document.querySelector('.modal-movie__title');   
-    movieTitle.focus();
+    const modalInner = document.querySelector('.modal-inner');   
+    modalInner.focus();
     //disable noominate button on modal if already nominated
     disableNominatedMovieOnModal(movie);
     //nominate movies on modal
@@ -400,7 +407,7 @@ function updateModalForNomineeUI(response){
   }
 
   let movieCard = `
-    <div class="modal-inner">
+    <div tabindex="-1" class="modal-inner">
       <div class="close-icon">
         <svg viewBox="0 0 20 20" class="pass-icon__Svg" tabindex="0" focusable="false" aria-hidden="true">
           <path d="M11.414 10l4.293-4.293a.999.999 0 1 0-1.414-1.414L10 8.586 5.707 4.293a.999.999 0 1 0-1.414 1.414L8.586 10l-4.293 4.293a.999.999 0 1 0 1.414 1.414L10 11.414l4.293 4.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z"></path>
@@ -410,7 +417,7 @@ function updateModalForNomineeUI(response){
         <img width="300" height="444" class="modal-movie__image" src="${movie.Poster}" alt="${movie.Title}">
       </div>
       <div class="modal-movie__title-wrapper">
-        <h2 tabindex="-1" class="modal-movie__title">${movie.Title}</h2>
+        <h2 class="modal-movie__title">${movie.Title}</h2>
         <ul class="modal-movie__detail-list">
           <li class="modal-movie__detail-list-item">
             <div class="modal-movie__detail-list-item-title">Genre</div>
@@ -446,8 +453,8 @@ function updateModalForNomineeUI(response){
   modalContainer.innerHTML = movieCard;
 
   //accessibility on modal
-  const movieTitle = document.querySelector('.modal-movie__title');   
-  movieTitle.focus();
+  const modalInner = document.querySelector('.modal-inner');   
+  modalInner.focus();
   //remove movies on modal
   removeNomineeOnModal()
   //close modal
@@ -472,6 +479,7 @@ function nominateMovie(){
       setTimeout(() => {
         //disable button
         button.setAttribute('disabled', 'disabled');
+        button.setAttribute('aria-disabled', 'true');
         //add nminated data attribute
         button.setAttribute('nominated', '');
         //change button label to nominated
@@ -515,6 +523,7 @@ function nominateMovieOnModal(){
     button.innerHTML=`${spinnerIcon}`;
     setTimeout(() => {
       button.setAttribute('disabled', 'disabled');
+      button.setAttribute('aria-disabled', 'true');
       button.textContent = "nominated ✓";
     }, 500);
     const buttonMovieId = button.getAttribute('data-movie-id');
@@ -542,6 +551,7 @@ function removeNomineeOnModal(){
     button.innerHTML=`${spinnerIcon}`;
     setTimeout(() => {
       button.setAttribute('disabled', 'disabled');
+      button.setAttribute('aria-disabled', 'true');
       button.textContent = "removed";
         }, 500);
     const buttonMovieId = button.getAttribute('data-movie-id');
@@ -660,6 +670,7 @@ function disableNominatedMovieOnSearchResults(){
         //let disabledAttribute = document.createAttribute('disabled');
         for (nominatedMovieBtn of nominatedMovieBtns){
           nominatedMovieBtn.setAttribute('disabled', 'disabled');
+          nominatedMovieBtn.setAttribute('aria-disabled', 'true');
           nominatedMovieBtn.setAttribute('nominated', '');
           nominatedMovieBtn.textContent ="nominated ✓";
         }
@@ -676,6 +687,7 @@ function disableNominatedMovieOnModal(movie){
         //let disabledAttribute = document.createAttribute('disabled');
         nominatedMovieBtnOnModal.setAttribute('nominated', 'nominated');
         nominatedMovieBtnOnModal.setAttribute('disabled', 'disabled');
+        nominatedMovieBtnOnModal.setAttribute('aria-disabled', 'true');
         nominatedMovieBtnOnModal.textContent ="nominated ✓";
       }
     }
@@ -704,6 +716,7 @@ function switchToMovieTab(triggerElement){
                   if(unnominatedMovieId === unnominatedMovieBtn.getAttribute('data-movie-unnominated-id') ){
                     if(!unnominatedMovieBtn.hasAttribute('nominated')){
                       unnominatedMovieBtn.setAttribute('disabled','disabled');
+                      unnominatedMovieBtn.setAttribute('aria-disabled', 'true');
                       unnominatedMovieBtn.textContent = 'unavailable';
                     }
                   }
@@ -724,6 +737,7 @@ function disableMoviesOnMaxNomineeforModal(movie){
         console.log(movie.imdbID, "we found the ID on modal")
         if (!nominatedMovieBtnOnModal.hasAttribute('nominated')){
           nominatedMovieBtnOnModal.setAttribute('disabled', 'disabled');
+          nominatedMovieBtnOnModal.setAttribute('aria-disabled', 'true');
           nominatedMovieBtnOnModal.textContent ="unavailable";
         }
       }
