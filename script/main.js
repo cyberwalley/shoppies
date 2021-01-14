@@ -71,7 +71,7 @@ let movieItems = [];
 let nominatedMovies = [];
 const maxNominee = 5;
 const unavailableImage ='https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912';
-const searchButton = document.querySelector('.submit-button');
+const searchButton = document.querySelector('.search-form__submit-button');
 const searchForm = document.querySelector('.search-form');
 const movieSection = document.querySelector('#movies .cards');
 const nominationSection = document.querySelector('#nomination .cards');
@@ -92,8 +92,25 @@ searchForm.addEventListener('submit', handleSubmit);
  
  async function getMovieDataByKeyword(searchKeyword) {
   try {
-    //Skeleton loading
-    const skeletonCards =`
+    const warningBanner = document.querySelector('.banner-card-warning__wrapper');
+    const errorMessage = document.querySelector('.error-message_wrapper')
+    const defaultState = document.querySelector('#movies .empty-state__container');
+    //disable empty state for the movie tab
+    if (defaultState){
+      defaultState.classList.add('hide');
+    }
+    //disable  warning banner when the keyword is valid
+    if (warningBanner){
+      warningBanner.style.display = 'none';
+    }
+    //disable error message when keyword is valid
+    if (errorMessage){
+      errorMessage.style.display = 'none';
+    }
+    //Skeleton loading   
+    let skeletonCards ="";
+    for (i = 0; i < 10; i++){
+      skeletonCards += `
     <div class="card">
         <div class="movie-card__image-wrapper loading">
         </div>
@@ -104,45 +121,12 @@ searchForm.addEventListener('submit', handleSubmit);
           </ul>
         </div>
         <div class="loading-skeleton__button loading"></div>
-      </div>
-      <div class="card">
-        <div class="movie-card__image-wrapper loading">
-        </div>
-        <div class="movie-card__content">
-          <h4 class="movie-card__title small--text-center loading"></h4>
-          <ul class="subtext-wrapper">
-              <li class="subtext-item small--text-center loading"></li>
-          </ul>
-        </div>
-        <div class="loading-skeleton__button loading"></div>
-      </div>
-      <div class="card">
-        <div class="movie-card__image-wrapper loading">
-        </div>
-        <div class="movie-card__content">
-          <h4 class="movie-card__title small--text-center loading"></h4>
-          <ul class="subtext-wrapper">
-              <li class="subtext-item small--text-center loading"></li>
-          </ul>
-        </div>
-        <div class="loading-skeleton__button loading"></div>
-      </div>
-      <div class="card">
-        <div class="movie-card__image-wrapper loading">
-        </div>
-        <div class="movie-card__content">
-          <h4 class="movie-card__title small--text-center loading"></h4>
-          <ul class="subtext-wrapper">
-              <li class="subtext-item small--text-center loading"></li>
-          </ul>
-        </div>
-        <div class="loading-skeleton__button loading"></div>
-      </div>
-  `; 
+      </div>`;
+    }
 
     //Spinner loading
     movieSection.innerHTML = skeletonCards;
-    //apiSettings
+
     let movieDataURL = `${apiSettings.apiUrl}?s=${searchKeyword}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
     console.log(movieDataURL, ' looking for yaaaaaa')
     const response = await axios.get(movieDataURL);
@@ -153,7 +137,7 @@ searchForm.addEventListener('submit', handleSubmit);
     if (invalidData == 'False'){
       validateKeyword(invalidData);
     }
-    //post data to object
+    //put data to object
     movieItems.unshift(validData);
     console.log(movieItems[0])
     console.log(movieItems[0].length)
@@ -161,7 +145,8 @@ searchForm.addEventListener('submit', handleSubmit);
     setTimeout(() => {
       //update UI with results
       updateResultUI(movieItems); 
-      }, 1500);
+      }, 500);
+      
     //reset oor clear search form
     searchForm.reset();
   }catch (error) {
@@ -170,6 +155,7 @@ searchForm.addEventListener('submit', handleSubmit);
 }
 
 function updateResultUI(movieItems){
+/*
   const warningBanner = document.querySelector('.banner-card-warning__wrapper');
   const errorMessage = document.querySelector('.error-message_wrapper')
   const defaultState = document.querySelector('#movies .empty-state__container');
@@ -185,7 +171,7 @@ function updateResultUI(movieItems){
   if (errorMessage){
     errorMessage.style.display = 'none';
   }
-
+*/
 let movieCard ="";
   //get data from object
   movieItems[0].forEach(movieItem => {
@@ -225,6 +211,7 @@ function validateKeyword(invalidData){
   const tabTopSection = document.querySelector('#banner-card');
   const searchKeyword = document.querySelector('[name="search"]').value;
   const systemErrorMessage = document.querySelector('.error-message_wrapper');
+  const resultCounter = document.querySelector('.movie-card__heading');
   if (invalidData){
     const warningBanner = 
     `<div class="banner-card-warning__wrapper">
@@ -246,7 +233,8 @@ function validateKeyword(invalidData){
   }
    //hide system error coming from catch
   systemErrorMessage.classList.add('hide');
-
+  //remove result count
+  resultCounter.classList.add('hide');
 }
 
 //open modal
@@ -475,7 +463,7 @@ function nominateMovie(){
     const button = evt.target;
     if (button.hasAttribute('data-movie-id')){
       console.log(button, 'yollooooooooo')
-      const spinnerIcon =`<span class="spinner  card-spinner">
+      const spinnerIcon =`<span class="spinner  button-spinner">
       <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
   </span>`;
       //add tloading spinner
@@ -520,7 +508,7 @@ function nominateMovieOnModal(){
   nominateBtnOnModal.addEventListener('click', handleNominateBtnOnModal);
   function handleNominateBtnOnModal(evt){
     const button = evt.target;
-    const spinnerIcon =`<span class="spinner  card-spinner">
+    const spinnerIcon =`<span class="spinner  button-spinner">
       <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
   </span>`;
     //add loading spinner
@@ -547,7 +535,7 @@ function removeNomineeOnModal(){
   nominateBtnOnModal.addEventListener('click', handleNominateBtnOnModal);
   function handleNominateBtnOnModal(evt){
     const button = evt.target;
-    const spinnerIcon =`<span class="spinner  card-spinner">
+    const spinnerIcon =`<span class="spinner  button-spinner">
     <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
 </span>`;
     //add loading spinner
@@ -638,7 +626,7 @@ function deleteNominatedMovie(){
   nominationSection.addEventListener('click', function(evt){
     const button = evt.target;
     if (button.matches('button.remove-btn')){
-        const spinnerIcon =`<span class="spinner  card-spinner">
+        const spinnerIcon =`<span class="spinner  button-spinner">
         <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
     </span>`;
       //add loading spinner

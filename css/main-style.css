@@ -554,7 +554,7 @@ h1.site-logo-text{
   margin-top: 2.5625em;
 }
 
-.search-input{
+.search-form__input{
     font-size: 1em;
     border-radius: 5px;
     min-width: 60%;
@@ -569,7 +569,7 @@ h1.site-logo-text{
 }
 
 @media screen and (max-width: 590px) {
-  .search-input{
+  .search-form__input{
     min-width: 100%;
   }
   
@@ -1499,7 +1499,23 @@ html{
   width: 100%;
 }
 
+#movies{
+  position: relative;
+}
+
 .card-spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  background-color: #ffff;
+  opacity: 0.5;
+}
+
+.button-spinner{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1510,7 +1526,13 @@ html{
   animation: spinner-loading .5s linear infinite;
   fill: #47c1bf;
 }
+
 .card-spinner svg{
+  height: 5.4rem;
+  width: 5.4rem;
+}
+
+.button-spinner svg{
   height: 1.4rem;
   width: 1.4rem;
 }
