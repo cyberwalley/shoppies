@@ -163,24 +163,7 @@ searchForm.addEventListener('submit', handleSubmit);
 }
 
 function updateResultUI(movieItems){
-/*
-  const warningBanner = document.querySelector('.banner-card-warning__wrapper');
-  const errorMessage = document.querySelector('.error-message_wrapper')
-  const defaultState = document.querySelector('#movies .empty-state__container');
-  //disable empty state for the movie tab
-  if (defaultState){
-    defaultState.classList.add('hide');
-  }
-  //disable  warning banner when the keyword is valid
-  if (warningBanner){
-    warningBanner.style.display = 'none';
-  }
-  //disable error message when keyword is valid
-  if (errorMessage){
-    errorMessage.style.display = 'none';
-  }
-*/
-let movieCard ="";
+  let movieCard ="";
   //get data from object
   movieItems[0].forEach(movieItem => {
     //if image is not available
@@ -239,7 +222,7 @@ function validateKeyword(invalidData){
     </div>`;
     tabTopSection.innerHTML = warningBanner;
   }
-   //hide system error coming from catch
+  //hide system error coming from catch
   systemErrorMessage.classList.add('hide');
   //remove result count
   resultCounter.classList.add('hide');
