@@ -118,7 +118,6 @@ img{
   align-self: flex-start;
 }
 
-
 /* Mobile */
 @media screen and (max-width: 590px) {
   .page-width{
@@ -159,7 +158,6 @@ img{
     display: none !important;
   }
 }
-
 
 /* Tablet */
 @media screen and (min-width: 1025px) {
@@ -1211,7 +1209,6 @@ li.side-bar-item{
 
 .modal-movie__title{
   padding: 10px;
-
 }
 
 @media screen and (max-width: 590px) {
