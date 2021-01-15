@@ -3,6 +3,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
   //check if key exist in the local storage
   if (localStorage.getItem("movies") !== null) {
     displayNominatedMovie();
+    //display total  number of nominated move on page load
+    const localStorageItems = JSON.parse(localStorage.getItem('movies'));
+    displayTotalNumberOfMoviesNominated(localStorageItems);
   } 
 });
 
@@ -85,6 +88,11 @@ const nominationSection = document.querySelector('#nomination .cards');
 const spinnerButtonIcon =`<span class="spinner  button-spinner">
       <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
   </span>`;
+
+//language
+const unavailableButtonName ="unavailable";
+const nominatedButtonName = "nominated ✓";
+const removedButtonName ="removed";
 
 searchForm.addEventListener('submit', handleSubmit);
  function handleSubmit(evt){
@@ -183,7 +191,11 @@ function updateResultUI(movieItems){
   
   movieSection.innerHTML = movieCard;
   const resultCounter = document.querySelector('.movie-card__heading-wrapper');
-  resultCounter.innerHTML = `<h3 class="text-center movie-card__heading">${movieItems[0].length} results found for <span class="search-keyword">"${searchTerm[0]}"</span></h3>`;
+  const totalNumberOfMoviesFound = movieItems[0].length;
+  resultCounter.innerHTML = `<h3 class="text-center movie-card__heading">${totalNumberOfMoviesFound} results found for <span class="search-keyword">"${searchTerm[0]}"</span></h3>`;
+  const moviesTabContentCount = document.querySelector('.movies-tab .tab-content-count');
+  //display total number of movies found
+  moviesTabContentCount.innerHTML = totalNumberOfMoviesFound;
   //diable nominated movie button on search results
   disableNominatedMovieOnSearchResults();
   //open and close modal to display more movie details
@@ -453,12 +465,13 @@ function nominateMovie(){
         //add nminated data attribute
         button.setAttribute('nominated', '');
         //change button label to nominated
-        evt.target.textContent = 'nominated ✓';
+        button.textContent = nominatedButtonName;
         }, 500);
 
       const movieId = button.getAttribute('data-movie-id');
       let findMovieById = movieItems[0].filter(movieItem => movieItem.imdbID === movieId);
       nominatedMovies.push(findMovieById);
+      //store in local storage
       localStorage.setItem('movies', JSON.stringify(nominatedMovies));
       const localStorageItems = JSON.parse(localStorage.getItem('movies'));
       if (localStorageItems.length === maxNominee){
@@ -473,6 +486,8 @@ function nominateMovie(){
           }, 500);
         } 
       }
+      //display total number o movies nominated when a movie is noominated
+      displayTotalNumberOfMoviesNominated(localStorageItems);
     }
   }
 }
@@ -489,7 +504,7 @@ function nominateMovieOnModal(){
     setTimeout(() => {
       button.setAttribute('disabled', 'disabled');
       button.setAttribute('aria-disabled', 'true');
-      button.textContent = "nominated ✓";
+      button.textContent = nominatedButtonName;
     }, 500);
     const buttonMovieId = button.getAttribute('data-movie-id');
     for (movieItem of movieItems[0]){
@@ -514,7 +529,7 @@ function removeNomineeOnModal(){
     setTimeout(() => {
       button.setAttribute('disabled', 'disabled');
       button.setAttribute('aria-disabled', 'true');
-      button.textContent = "removed";
+      button.textContent = removedButtonName;
         }, 500);
     const buttonMovieId = button.getAttribute('data-movie-id');
     for (nominatedMovie of nominatedMovies){
@@ -607,6 +622,9 @@ function deleteNominatedMovie(){
         nominatedMovies = nominatedMovies.filter(nominatedMovie => nominatedMovie[0].imdbID !== movieId);
         localStorage.setItem('movies', JSON.stringify(nominatedMovies))
         updateNominationsUI(nominatedMovies);
+        //update total number of nominated movie
+        const localStorageItems = JSON.parse(localStorage.getItem('movies'));
+        displayTotalNumberOfMoviesNominated(localStorageItems);
         //update results UI after removing movie from the nomination list
         if (movieItems.length){
           updateResultUI(movieItems); 
@@ -627,7 +645,7 @@ function disableNominatedMovieOnSearchResults(){
           nominatedMovieBtn.setAttribute('disabled', 'disabled');
           nominatedMovieBtn.setAttribute('aria-disabled', 'true');
           nominatedMovieBtn.setAttribute('nominated', '');
-          nominatedMovieBtn.textContent ="nominated ✓";
+          nominatedMovieBtn.textContent = nominatedButtonName;
         }
       }
     }
@@ -642,12 +660,12 @@ function disableNominatedMovieOnModal(movie){
         nominatedMovieBtnOnModal.setAttribute('nominated', 'nominated');
         nominatedMovieBtnOnModal.setAttribute('disabled', 'disabled');
         nominatedMovieBtnOnModal.setAttribute('aria-disabled', 'true');
-        nominatedMovieBtnOnModal.textContent ="nominated ✓";
+        nominatedMovieBtnOnModal.textContent = nominatedButtonName;
       }
     }
 }
 
-//go to movies tab when the nominate button is clciked
+//go to movies tab when the nominate button is clicked
 function switchToMovieTab(triggerElement){
   triggerElement.addEventListener('click', function(){
   const moviesTab = document.querySelector('.movies-tab.tablink');
@@ -671,7 +689,7 @@ function switchToMovieTab(triggerElement){
                     if(!unnominatedMovieBtn.hasAttribute('nominated')){
                       unnominatedMovieBtn.setAttribute('disabled','disabled');
                       unnominatedMovieBtn.setAttribute('aria-disabled', 'true');
-                      unnominatedMovieBtn.textContent = 'unavailable';
+                      unnominatedMovieBtn.textContent = unavailableButtonName;
                     }
                   }
                 });
@@ -691,10 +709,19 @@ function disableMoviesOnMaxNomineeforModal(movie){
         if (!nominatedMovieBtnOnModal.hasAttribute('nominated')){
           nominatedMovieBtnOnModal.setAttribute('disabled', 'disabled');
           nominatedMovieBtnOnModal.setAttribute('aria-disabled', 'true');
-          nominatedMovieBtnOnModal.textContent ="unavailable";
+          nominatedMovieBtnOnModal.textContent = unavailableButtonName;
         }
       }
     }
+  }
+}
+function displayTotalNumberOfMoviesNominated(localStorageItems){
+  if (localStorageItems){
+    //grab total number of movies nominated from local storage
+    const totalNumberOfMoviesNominated = localStorageItems.length;
+    const nominationTabContentCount = document.querySelector('.nomination-tab .tab-content-count');
+    //display total number of movies nominated
+    nominationTabContentCount.innerHTML = totalNumberOfMoviesNominated;
   }
 }
 

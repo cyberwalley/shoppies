@@ -558,10 +558,12 @@ h1.site-logo-text{
 
 .movies-tab.selected-tab{
   color: var(--color-black);
+  font-weight: 500;
 }
 
 .nomination-tab.selected-tab{
   color: var(--color-black);
+  font-weight: 500;
 }
 
 .movies{
@@ -570,6 +572,18 @@ h1.site-logo-text{
 
 .nomination{
   display: none;
+}
+
+.tab-content-count{
+  padding: .3rem .8rem;
+  background-color: #dfe3e8;
+  color: var(--color-black);
+  border-radius: 2rem;
+  font-size: 0.9rem;
+}
+.selected-tab .tab-content-count{
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
 .movies.selected-tabcontent{
