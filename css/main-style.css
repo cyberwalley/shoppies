@@ -633,7 +633,7 @@ h1.site-logo-text{
 
 .tab-title__container{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-gap: 0px;
 }
 
@@ -755,12 +755,24 @@ h1.site-logo-text{
   line-height: 2;
   color: var(--color-black);
 }
+@media screen and (max-width: 280px) {
+  .banner-card__heading{
+    font-size: 0.99rem;
+  }
+}
 
 ul.banner-card-list{
   list-style: disc;
   margin: 1em;
   padding-left: 10px;
   line-height: 1.4;
+}
+
+@media screen and (max-width: 280px) {
+  ul.banner-card-list{
+    font-size: 0.79rem;
+    padding-left: 4px;
+  }
 }
 
 .popular-movie__heading, .empty-state__heading, .movie-card__heading{
