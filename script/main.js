@@ -51,8 +51,6 @@ function openTab(){
         evt.target.setAttribute('aria-selected', 'true');
         allTabContents.forEach(tabContent => tabContent.classList.remove('selected-tabcontent'));
         tabNominationContent.classList.add('selected-tabcontent')
-        //displayNominatedMovie();
-        console.log(nominatedMovies, "display array on tab")
         //update nomination tab if local storage is not empty
         if (localStorage.getItem("movies") !== null) {
           updateNominationsUI(nominatedMovies);
@@ -77,20 +75,23 @@ let searchTerm =[];
 let movieItems = [];
 // array to hold state for nominated movies
 let nominatedMovies = [];
+
 const maxNominee = 5;
 const unavailableImage ='https://cdn.shopify.com/s/files/1/2506/6936/files/image-unavailable.svg?v=1609864912';
 const searchButton = document.querySelector('.search-form__submit-button');
 const searchForm = document.querySelector('.search-form');
 const movieSection = document.querySelector('#movies .cards');
 const nominationSection = document.querySelector('#nomination .cards');
+const spinnerButtonIcon =`<span class="spinner  button-spinner">
+      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
+  </span>`;
 
 searchForm.addEventListener('submit', handleSubmit);
  function handleSubmit(evt){
   evt.preventDefault();
   let searchKeyword = document.querySelector('[name="search"]').value;
   searchTerm.unshift(searchKeyword);
-  console.log(searchTerm);
-  //switch too the movies tab
+  //switch to the movies tab
   const moviesTab = document.querySelector('.movies-tab.tablink');
   moviesTab.click();
   window.location ='#empty-state__heading';
@@ -132,13 +133,11 @@ searchForm.addEventListener('submit', handleSubmit);
       </div>`;
     }
 
-    //Spinner loading
+    //skeleton loading
     movieSection.innerHTML = skeletonCards;
 
     let movieDataURL = `${apiSettings.apiUrl}?s=${searchKeyword}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
-    console.log(movieDataURL, ' looking for yaaaaaa')
     const response = await axios.get(movieDataURL);
-    console.log(response, "yello");
     const invalidData = response.data.Response;
     const validData = response.data.Search;
     //validate input
@@ -147,8 +146,6 @@ searchForm.addEventListener('submit', handleSubmit);
     }
     //put data to object
     movieItems.unshift(validData);
-    console.log(movieItems[0])
-    console.log(movieItems[0].length)
     //timer delay for skeleton loading
     setTimeout(() => {
       //update UI with results
@@ -247,7 +244,6 @@ function openModal(){
 
   function handleModalClickForMoviesTab(evt){
     evt.preventDefault();
-    console.log('grabbed the button')
     if (evt.target.hasAttribute('data-movie-id')){
       modalContainer.classList.remove('open');
       const movieId = evt.target.getAttribute('data-movie-id');
@@ -259,7 +255,6 @@ function openModal(){
 
   function handleModalClickForNominationTab(evt){
     evt.preventDefault();
-    console.log('grabbed the button')
     if (evt.target.hasAttribute('data-movie-id')){
       modalContainer.classList.remove('open');
       const movieId = evt.target.getAttribute('data-movie-id');
@@ -297,7 +292,6 @@ async function getMovieDataById(movieId){
   try {
     let movieDataURL = `${apiSettings.apiUrl}?i=${movieId}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
     const response = await axios.get(movieDataURL);
-    console.log(response, "getMovieDataById");
     updateModalUI(response);  
   }catch (error) {
     displayError(error);
@@ -308,7 +302,6 @@ async function getMovieDataByIdForNomineeModal(movieId){
   try {
     let movieDataURL = `${apiSettings.apiUrl}?i=${movieId}&type=${apiSettings.contentType}&apikey=${apiSettings.apiKey}`;
     const response = await axios.get(movieDataURL);
-    console.log(response, "getMovieDataById");
     updateModalForNomineeUI(response);  
   }catch (error) {
     displayError(error);
@@ -316,7 +309,6 @@ async function getMovieDataByIdForNomineeModal(movieId){
 }
 
 function updateModalUI(response){
-  console.log(response , 'updateModalUI');
   let movie = response.data;
   //if image is not available
   if (movie.Poster == 'N/A'){
@@ -382,7 +374,6 @@ function updateModalUI(response){
 }
 
 function updateModalForNomineeUI(response){
-  console.log(response , 'updateModalForNomineeUI');
   let movie = response.data;
   //if image is not available
   if (movie.Poster == 'N/A'){
@@ -452,12 +443,8 @@ function nominateMovie(){
   function addMovieItemsToLocalStorage(evt){
     const button = evt.target;
     if (button.hasAttribute('data-movie-id')){
-      console.log(button, 'yollooooooooo')
-      const spinnerIcon =`<span class="spinner  button-spinner">
-      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
-  </span>`;
-      //add tloading spinner
-      button.innerHTML=`${spinnerIcon}`;
+      //add loading spinner
+      button.innerHTML=`${spinnerButtonIcon}`;
       //timer for loading spinner
       setTimeout(() => {
         //disable button
@@ -472,11 +459,9 @@ function nominateMovie(){
       const movieId = button.getAttribute('data-movie-id');
       let findMovieById = movieItems[0].filter(movieItem => movieItem.imdbID === movieId);
       nominatedMovies.push(findMovieById);
-      console.log(nominatedMovies, "testing testing big cities")
       localStorage.setItem('movies', JSON.stringify(nominatedMovies));
       const localStorageItems = JSON.parse(localStorage.getItem('movies'));
       if (localStorageItems.length === maxNominee){
-        console.log('you have nominated 5 movies');
         const noticeBanner = document.querySelector('.banner-card-pass__wrapper');
         //disable  warning banner when the keyword is valid
         if (noticeBanner){
@@ -499,11 +484,8 @@ function nominateMovieOnModal(){
   nominateBtnOnModal.addEventListener('click', handleNominateBtnOnModal);
   function handleNominateBtnOnModal(evt){
     const button = evt.target;
-    const spinnerIcon =`<span class="spinner  button-spinner">
-      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
-  </span>`;
     //add loading spinner
-    button.innerHTML=`${spinnerIcon}`;
+    button.innerHTML=`${spinnerButtonIcon}`;
     setTimeout(() => {
       button.setAttribute('disabled', 'disabled');
       button.setAttribute('aria-disabled', 'true');
@@ -527,11 +509,8 @@ function removeNomineeOnModal(){
   nominateBtnOnModal.addEventListener('click', handleNominateBtnOnModal);
   function handleNominateBtnOnModal(evt){
     const button = evt.target;
-    const spinnerIcon =`<span class="spinner  button-spinner">
-    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
-</span>`;
     //add loading spinner
-    button.innerHTML=`${spinnerIcon}`;
+    button.innerHTML=`${spinnerButtonIcon}`;
     setTimeout(() => {
       button.setAttribute('disabled', 'disabled');
       button.setAttribute('aria-disabled', 'true');
@@ -551,7 +530,6 @@ function removeNomineeOnModal(){
 function displayNominatedMovie(){
   const localStorageItems = JSON.parse(localStorage.getItem('movies'));
   if (localStorageItems.length){
-    console.log(nominatedMovies, 'from displaynominatedmovie')
     nominatedMovies.push(...localStorageItems);
     updateNominationsUI(nominatedMovies);
     // delete nominated movie
@@ -586,7 +564,6 @@ function updateNominationsUI(nominatedMovies){
     const nominateButtonOnEmptyState = document.querySelector('.btn.empty-state-nominate-btn');
     switchToMovieTab(nominateButtonOnEmptyState);
   }
-console.log(nominatedMovies, 'updateNominationsUI- na so we dey');
   //get data from object
   let movieCard='';
   nominatedMovies.forEach(nominatedMovie => {
@@ -619,16 +596,12 @@ function deleteNominatedMovie(){
   nominationSection.addEventListener('click', function(evt){
     const button = evt.target;
     if (button.matches('button.remove-btn')){
-        const spinnerIcon =`<span class="spinner  button-spinner">
-        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"></path></svg>
-    </span>`;
       //add loading spinner
-      button.innerHTML=`${spinnerIcon}`;
+      button.innerHTML=`${spinnerButtonIcon}`;
     }
     //timer to allow loading spinners to kick in before removing nominee
     setTimeout(() => {
       if (button.matches('button.remove-btn')){
-        console.log('deleting nominated movie');
         const movieId = button.getAttribute('data-movie-id');
         //filter deleted movie by ID and then pass it to the nominatedMovies array  tp overwrite it
         nominatedMovies = nominatedMovies.filter(nominatedMovie => nominatedMovie[0].imdbID !== movieId);
@@ -648,7 +621,6 @@ function disableNominatedMovieOnSearchResults(){
   for (movieItem of movieItems[0]){
     for (nominatedMovie of nominatedMovies){
       if (movieItem.imdbID === nominatedMovie[0].imdbID ){
-        console.log(movieItem.imdbID, "we found the ID")
         let nominatedMovieBtns = document.querySelectorAll(`button.nominate[data-movie-id="${movieItem.imdbID}"]`)
         //let disabledAttribute = document.createAttribute('disabled');
         for (nominatedMovieBtn of nominatedMovieBtns){
@@ -666,7 +638,6 @@ function disableNominatedMovieOnModal(movie){
  const nominatedMovieBtnOnModal = document.querySelector(`button.modal-nominate-btn[data-movie-id="${movie.imdbID}"]`);
     for (nominatedMovie of nominatedMovies){ 
       if (movie.imdbID === nominatedMovie[0].imdbID ){
-        console.log(movie.imdbID, "we found the ID on modal")
         //let disabledAttribute = document.createAttribute('disabled');
         nominatedMovieBtnOnModal.setAttribute('nominated', 'nominated');
         nominatedMovieBtnOnModal.setAttribute('disabled', 'disabled');
@@ -717,7 +688,6 @@ function disableMoviesOnMaxNomineeforModal(movie){
   if (localStorageItems.length === maxNominee){
     for (nominatedMovie of nominatedMovies){ 
       if (movie.imdbID !== nominatedMovie[0].imdbID ){
-        console.log(movie.imdbID, "we found the ID on modal")
         if (!nominatedMovieBtnOnModal.hasAttribute('nominated')){
           nominatedMovieBtnOnModal.setAttribute('disabled', 'disabled');
           nominatedMovieBtnOnModal.setAttribute('aria-disabled', 'true');
