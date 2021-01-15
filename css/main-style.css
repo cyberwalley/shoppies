@@ -566,6 +566,16 @@ h1.site-logo-text{
   font-weight: 500;
 }
 
+.movies-tab, .nomination-tab{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-content-count{
+  margin-left: 0.3rem;
+}
+
 .movies{
   display: none;
 }
