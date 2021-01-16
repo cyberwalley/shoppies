@@ -517,6 +517,58 @@ h1.site-logo-text{
   }
 }
 
+.hero-page-banner{
+  background-color: var(--color-green);
+  height: 100%;
+  padding: 1.875em 1.875em;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+a.mega-microtitle__link{
+  text-decoration: underline;
+}
+
+.breadcrumb__wrapper{
+  border-bottom: 1px dotted var(--color-gray);
+  padding-bottom: 10px;
+}
+
+.breadcrumb__list { 
+  padding: 10px 16px;
+  list-style: none;
+}
+
+.breadcrumb__list li { 
+  display: inline;
+  font-size: 18px;
+}
+
+.breadcrumb__list li+li:before {
+  padding: 8px;
+  color: var(--color-black);
+  content: "/\00a0";
+}
+
+.breadcrumb__list li a {
+  color: var(--color-green);
+  text-decoration: underline;
+}
+
+.page-main-content{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+ul.help__list{
+  line-height: 1.3333;
+  list-style: inside;
+  font-size: 1.1rem;
+}
+
+li.help__list-item {
+  margin-top: 20px;
+}
+
 .article-heading{
   margin-bottom: 0.4375em;
   margin-top: 0.4375em;

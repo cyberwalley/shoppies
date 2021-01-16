@@ -27,19 +27,18 @@
                 <div class="hero--inner-wrapper page-width">
                     <div class="grid">
                         <div class="grid__item medium-up--two-thirds">
-                            <h1 id="megaTitle" class="mega-title page-width">
-                                    Nominate your favorite movies.
-                            </h1>
-                            <p class="mega-subtitle page-width ">
-                                Popular keywords: Harry potter, Dracula, Spiderman...</a>
+                            <h1 id="megaTitle" class="mega-title page-width small--text-center"> Nominate your favorite movies. </h1>
+                            <p class="mega-subtitle page-width small--text-center">
+                                Popular keywords: Harry potter, Dracula, Spiderman...
                             </p>
                             <form class="page-width search-form" role="search">
                               <label class="search-form__label visually-hidden" for="searchInput">Movie title</label>
                               <input id="searchInput" class="search-form__input" type="search" name="search" placeholder="Type movie title here..." autocomplete="off" required>
                               <button class="btn search-form__submit-button" type="submit">Search</button>
                             </form>
-                            <p class="mega-microtitle page-width">
-                              <a class="mega-microtitle__link" href="/help.html">Help?</a></p>
+                            <p class="mega-microtitle page-width small--text-center">
+                              <a class="mega-microtitle__link" href="/help.html">Help?</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -48,12 +47,12 @@
               <div role="tablist" class="tab-title__container">
                 <div class="tab-title__wrapper selected-tab">
                   <button class="movies-tab tablink selected-tab" tabindex="0" type="button" role="tab" aria-selected="true" id="tab-1" aria-controls="movies">
-                    Movies <span class="tab-content-count">0</span>
+                    Movies <span class="tab-content-count" aria-live="polite">0</span>
                   </button>
                 </div>  
                 <div class="tab-title__wrapper">
                   <button class="nomination-tab tablink text-center" tabindex="-1" type="button" role="tab" aria-selected="false" id="tab-2" aria-controls="nomination">
-                    Nomination <span class="tab-content-count">0</span>
+                    Nomination <span class="tab-content-count" role="region" aria-live="polite">0</span>
                   </button>
                 </div>
               </div>
@@ -98,7 +97,7 @@
                   </div>
                   <div class="movie-card__heading-wrapper">
                   </div>
-                  <div class="cards">
+                  <div class="cards" role="region" aria-live="polite">
                   </div>
                 </div>
                 <div id="nomination" class="nomination tabcontent" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
@@ -119,7 +118,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cards">
+                  <div class="cards" role="region" aria-live="polite">
                   </div>
                 </div>
               </div>
