@@ -13,5 +13,7 @@ After several monumental successes in the commerce space, Shopify has recently b
 
 ## Screenshots
 <details><summary>Expand</summary><br>
+
 ![](https://screenshot.click/16-52-u2sr8-j9rmx.jpg)
+
 </details>
