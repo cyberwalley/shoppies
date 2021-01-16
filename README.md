@@ -11,6 +11,7 @@ After several monumental successes in the commerce space, Shopify has recently b
 ### Help
 * [How to use the app](https://shoppies-awards.netlify.app/help.html)
 
-### Screenshots
-
+## Screenshots
+<details><summary>Expand</summary><br>
 ![](https://screenshot.click/16-52-u2sr8-j9rmx.jpg)
+</details>
