@@ -1194,16 +1194,12 @@ li.side-bar-item{
 
   .footer-inner-wrapper > *:nth-child(1) {
     -ms-grid-row: 1;
-    grid-row: 1;
-    -ms-grid-column: 1;
-    grid-column: 1;
+    -ms-grid-column: 1
   }
 
   .footer-inner-wrapper > *:nth-child(2) {
     -ms-grid-row: 3;
-    grid-row: 3;
-    -ms-grid-column: 1;
-    grid-column: 1;
+    -ms-grid-column: 1
   }
 
   .footer-top{
@@ -1223,16 +1219,12 @@ li.side-bar-item{
 
   .footer-bottom-content > *:nth-child(1){
     -ms-grid-row: 1;
-    grid-row: 1;
     -ms-grid-column: 1;
-    grid-column: 1;
   }
 
   .footer-bottom-content > *:nth-child(2){
     -ms-grid-row: 3;
-    grid-row: 3;
     -ms-grid-column: 1;
-    grid-column: 1;
   }
 
   .footer-bottom-item:nth-child(1){
@@ -1422,16 +1414,12 @@ li.side-bar-item{
 
 .modal-inner > *:nth-child(1) {
   -ms-grid-row: 1;
-  grid-row: 1;
   -ms-grid-column: 1;
-  grid-column: 1;
 }
 
 .modal-inner > *:nth-child(2) {
   -ms-grid-row: 1;
-  grid-row: 1;
   -ms-grid-column: 3;
-  grid-column: 3;
 }
 
 .modal-movie__plot-wrapper{
